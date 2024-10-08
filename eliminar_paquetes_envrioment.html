@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>eliminar_paquetes_envrioment.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="deshabilitar-el-repositorio-enterprise-en-proxmox">Deshabilitar el Repositorio Enterprise en Proxmox</h1>
+<p>Proxmox Virtual Environment (PVE) ofrece una versión empresarial de pago que incluye soporte y acceso a un repositorio especial para actualizaciones. Si estás utilizando la versión gratuita, es recomendable deshabilitar el repositorio empresarial para evitar errores al actualizar o instalar paquetes.</p>
+<h3 id="pasos-para-deshabilitar-el-repositorio-enterprise-y-habilitar-el-repositorio-community">Pasos para deshabilitar el repositorio Enterprise y habilitar el repositorio Community</h3>
+<h2 id="1-deshabilitar-el-repositorio-enterprise">1. Deshabilitar el Repositorio Enterprise</h2>
+<p>Por defecto, Proxmox incluye el repositorio empresarial (<code>enterprise</code>) en su configuración de apt. Para deshabilitar este repositorio:</p>
+<ol>
+<li>
+<p>Conéctate al servidor Proxmox a través de SSH o abre una terminal en el servidor.</p>
+</li>
+<li>
+<p>Edita el archivo del repositorio empresarial. Usa el siguiente comando:</p>
+<pre class="hljs"><code><div>nano /etc/apt/sources.list.d/pve-enterprise.list
+</div></code></pre>
+</li>
+<li>
+<p>Comenta la línea del repositorio empresarial agregando un <code>#</code> al inicio de la línea, para que quede así:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">#deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise</span>
+</div></code></pre>
+</li>
+<li>
+<p>Guarda el archivo y cierra el editor (en <code>nano</code>, usa <code>CTRL+O</code> para guardar y <code>CTRL+X</code> para salir).</p>
+</li>
+</ol>
+<h2 id="2-a%C3%B1adir-el-repositorio-community">2. Añadir el Repositorio Community</h2>
+<p>A continuación, debes añadir el repositorio comunitario (Community Repository), que es gratuito y se puede usar sin soporte oficial.</p>
+<ol>
+<li>
+<p>Edita el archivo de repositorios de apt:</p>
+<pre class="hljs"><code><div>nano /etc/apt/sources.list
+</div></code></pre>
+</li>
+<li>
+<p>Añade la siguiente línea al archivo para habilitar el repositorio Community (reemplazando <code>bookworm</code> según tu versión de Debian si es diferente):</p>
+<pre class="hljs"><code><div>deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription
+</div></code></pre>
+</li>
+<li>
+<p>Guarda y cierra el archivo (<code>CTRL+O</code> y <code>CTRL+X</code> en nano).</p>
+</li>
+</ol>
+<h3 id="3-verificar-el-archivo-de-configuraci%C3%B3n-de-repositorios-de-ceph">3. Verificar el archivo de configuración de repositorios de Ceph</h3>
+<p>Revisa si tienes configurado el repositorio de Ceph para la versión de pago de Proxmox en los archivos de configuración de apt.</p>
+<ol>
+<li>
+<p>Edita el archivo que contiene el repositorio de Ceph:</p>
+<pre class="hljs"><code><div>nano /etc/apt/sources.list.d/ceph.list
+</div></code></pre>
+</li>
+<li>
+<p>Si ves una línea como esta (o similar) en el archivo:</p>
+<pre class="hljs"><code><div>deb https://enterprise.proxmox.com/debian/ceph-quincy bookworm main
+</div></code></pre>
+<p>Debes comentarla agregando un <code>#</code> al inicio de la línea, de modo que quede así:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">#deb https://enterprise.proxmox.com/debian/ceph-quincy bookworm main</span>
+</div></code></pre>
+</li>
+<li>
+<p>Guarda el archivo y cierra el editor (<code>CTRL+O</code> para guardar, <code>CTRL+X</code> para salir).</p>
+</li>
+</ol>
+<h3 id="4-actualizar-la-lista-de-paquetes">4. Actualizar la lista de paquetes</h3>
+<p>Después de haber realizado estos cambios, ejecuta el siguiente comando para actualizar los repositorios y verificar que ya no se produzca el error:</p>
+<pre class="hljs"><code><div>apt update
+</div></code></pre>
+<h3 id="5-opcional-a%C3%B1adir-el-repositorio-ceph-community">5. (Opcional) Añadir el Repositorio Ceph Community</h3>
+<p>Si necesitas Ceph y quieres usar el repositorio de la comunidad en lugar del de Enterprise, puedes añadir el repositorio de Ceph Community.</p>
+<ol>
+<li>
+<p>Edita tu archivo de fuentes:</p>
+<pre class="hljs"><code><div>nano /etc/apt/sources.list
+</div></code></pre>
+</li>
+<li>
+<p>Añade la siguiente línea para el repositorio de Ceph Community (para <strong>Quincy</strong>, ajusta según la versión de Ceph que necesites):</p>
+<pre class="hljs"><code><div>deb http://download.proxmox.com/debian/ceph-quincy bookworm main
+</div></code></pre>
+</li>
+<li>
+<p>Guarda y cierra el archivo (<code>CTRL+O</code>, <code>CTRL+X</code>).</p>
+</li>
+<li>
+<p>Actualiza los repositorios:</p>
+<pre class="hljs"><code><div>apt update
+</div></code></pre>
+</li>
+</ol>
+<h2 id="conclusi%C3%B3n">Conclusión</h2>
+<p>Siguiendo estos pasos, Proxmox solo utilizará los repositorios gratuitos y no intentará instalar paquetes del repositorio empresarial. Además, opcionalmente, puedes ocultar el mensaje de suscripción no válida en la interfaz web.</p>
+
+</body>
+</html>
